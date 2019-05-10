@@ -27,3 +27,4 @@ def visible_accessibility_id_assert(self, element):
         print('Element is not displayed')
     else:
         print('Element is displayed')
+
