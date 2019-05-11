@@ -21,7 +21,7 @@ class login(unittest.TestCase):
         self.driver = des_cap(self, device_name= 'Android')
         
     def test_login(self):
-        EMAIL= 'Captain.TimGranger@gmail.com'
+        EMAIL= 'Z.TimGranger@gmail.com'
         PASSWORD1 = '12345678Test'
         PASSWORD2 = '1qwerty'
 
@@ -69,11 +69,14 @@ class login(unittest.TestCase):
         # Clear password field and enter valid password
         self.driver.find_element_by_xpath(login_password_adj).clear()
         self.driver.find_element_by_xpath(login_password_adj).send_keys(PASSWORD1)
+        self.driver.implicitly_wait(1000)
 
         # click login btn
         self.driver.find_element_by_xpath(login_btn).click()
 
         # Assert user has been successfuly logged in
+        self.driver.find_element_by_xpath(home_loggedin_ident)
+        print('User is not logged in')       
         
 def takeDown(self):
         self.driver.quit()
