@@ -16,8 +16,8 @@ def des_cap(self, device_name):
     "automationName": "UiAutomator2",
     "platformName": "Android",
     "deviceName": f'{device_name}',
-    "app": PATH('..\\app\\com.yoodlize.apk'),
-    "appPackage": "com.yoodlize",
+    "app": PATH('..\\app\\yoodlize.apk'),
+    "appPackage": "com.yoodlize.test",
     "appWaitActivity": "*",
     "autoGrantPermissions": "true"
     }

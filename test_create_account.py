@@ -21,7 +21,7 @@ class create_account(unittest.TestCase):
         self.driver = des_cap(self, device_name= 'Android')
         
     def test_create_account(self):
-        EMAIL= 'Z.TimGrang@gmail.gov'
+        EMAIL= 'Z.TimGranger@gmail.gov'
         PASSWORD1 = '12345678Test'
         PASSWORD2 = '12345678Test'
         FNAME = 'Tim'
@@ -42,11 +42,13 @@ class create_account(unittest.TestCase):
 
         # assert user is on create account page
         self.driver.find_element_by_xpath(create_account_ident).is_displayed()
+        print('User made it to Create Account Page! Now checking back BTN')
 
         # Select Back Button to ensure back on login navigates back to home page
         self.driver.find_element_by_xpath(create_back_btn).click()
         self.driver.implicitly_wait(1000)
         self.assertTrue(self.driver.find_element_by_xpath(home_ident).is_displayed())
+        print('Back Btn Worked, now back to create account page')
 
         # navigate back to create account page by way of "Register" button
         self.driver.find_element_by_xpath(home_register_btn).click()
@@ -57,19 +59,21 @@ class create_account(unittest.TestCase):
         self.driver.implicitly_wait(1000)
 
         # enter valid info for all fields
+        print('filling all fields leaving password unmatching')
         self.driver.find_element_by_xpath(create_email_field).send_keys(EMAIL)
         self.driver.find_element_by_xpath(create_password_field).send_keys(PASSWORD1)
         self.driver.find_element_by_xpath(create_re_password_field).send_keys('aaaa')
-        self.driver.fine_element_by_xpath(create_first_name_field)
-        self.driver.fine_element_by_xpath(create_last_name_field)
+        self.driver.find_element_by_xpath(create_first_name_field).send_keys(FNAME)
+        self.driver.find_element_by_xpath(create_last_name_field).send_keys(LNAME)
 
         # click create btn
         self.driver.find_element_by_xpath(create_account_btn).click()
         self.driver.implicitly_wait(100)
 
         # assert error message is displayed
-        self.assertTrue(self.driver.find_elements_by_id(create_err_popup).is_displayed())
+        self.driver.find_elements_by_id(create_err_popup)
         self.assertTrue(EC.text_to_be_present_in_element((By.ID,'android:id/message'), 'Passwords must match'))
+        print('Passwords must match err msg is displayed')
         self.driver.find_element_by_id(create_popup_ok_btn).click()
 
         # Assert user has not navigated away from creation page
@@ -77,16 +81,19 @@ class create_account(unittest.TestCase):
         self.driver.implicitly_wait(1000)
 
         # Clear password field and enter valid password
-        self.driver.find_element_by_xpath(create_re_password_field).clear()
-        self.driver.find_element_by_xpath(create_re_password_field).send_keys(PASSWORD2)
+        print('Entering Matching password')
+        self.driver.find_element_by_xpath(create_re_password_adj_field).clear()
+        self.driver.find_element_by_xpath(create_re_password_adj_field).send_keys(PASSWORD2)
 
         # click create btn
+        print('Trying to create account with out validating age')
         self.driver.find_element_by_xpath(create_account_btn).click()
         self.driver.implicitly_wait(100)
 
         # assert age error message is displayed
-        self.assertTrue(self.driver.find_elements_by_id(create_err_popup).is_displayed())
+        self.driver.find_elements_by_id(create_err_popup)
         self.assertTrue(EC.text_to_be_present_in_element((By.ID,'android:id/message'), 'Please verify your age'))
+        print('Please verify your age err msg is displayed')
         self.driver.find_element_by_id(create_popup_ok_btn).click()
 
         # Assert user has not navigated away from creation page
@@ -94,19 +101,22 @@ class create_account(unittest.TestCase):
         self.driver.implicitly_wait(1000)
 
         # click i'm 18 btn
+        print('Select Im 18 check box')
         self.driver.find_element_by_xpath(create_im_18).click()
 
         # clear email and enter invalid email field
-        self.driver.find_element_by_xpath(create_email_field).clear()
-        self.driver.find_element_by_xpath(create_email_field).send_keys('Z.timgranger#gmail..com')
+        print('Now entering an email with invalid format')
+        self.driver.find_element_by_xpath(create_email_adj_field).clear()
+        self.driver.find_element_by_xpath(create_email_adj_field).send_keys('Z.timgranger#gmail..com')
 
         # click create btn
         self.driver.find_element_by_xpath(create_account_btn).click()
         self.driver.implicitly_wait(100)
 
         # assert email error message is displayed
-        self.assertTrue(self.driver.find_elements_by_id(create_err_popup).is_displayed())
+        self.driver.find_elements_by_id(create_err_popup)
         self.assertTrue(EC.text_to_be_present_in_element((By.ID,'android:id/message'), 'Please enter a valid email address.'))
+        print('Please enter a valid email address. err msg is displayed')
         self.driver.find_element_by_id(create_popup_ok_btn).click()
 
         # Assert user has not navigated away from creation page
@@ -114,17 +124,19 @@ class create_account(unittest.TestCase):
         self.driver.implicitly_wait(1000)
 
         # clear email and enter valid email field
-        self.driver.find_element_by_xpath(create_email_field).clear()
-        self.driver.find_element_by_xpath(create_email_field).send_keys(EMAIL)
+        self.driver.find_element_by_xpath(create_email_adj_field).clear()
+        self.driver.find_element_by_xpath(create_email_adj_field).send_keys(EMAIL)
 
         # clear First Name and select create
+        print('Entered valid e-mail now clearing name field')
         self.driver.find_element_by_xpath(create_first_name_field).clear()
         self.driver.find_element_by_xpath(create_account_btn).click()
         self.driver.implicitly_wait(100)
 
         # assert first name error message is displayed
-        self.assertTrue(self.driver.find_elements_by_id(create_err_popup).is_displayed())
+        self.driver.find_elements_by_id(create_err_popup)
         self.assertTrue(EC.text_to_be_present_in_element((By.ID,'android:id/message'), 'Please enter your first name.'))
+        print('Please enter your first name. err msg displayed')
         self.driver.find_element_by_id(create_popup_ok_btn).click()
 
         # Assert user has not navigated away from creation page
@@ -132,14 +144,16 @@ class create_account(unittest.TestCase):
         self.driver.implicitly_wait(1000)
 
         # fill first name with Valid input and clear last name
+        print('fill first name with Valid input and clear last name')
         self.driver.find_element_by_xpath(create_first_name_field).send_keys(FNAME)
         self.driver.find_element_by_xpath(create_last_name_field).clear()
         self.driver.find_element_by_xpath(create_account_btn).click()
         self.driver.implicitly_wait(100)
 
         # assert last name error message is displayed
-        self.assertTrue(self.driver.find_elements_by_id(create_err_popup).is_displayed())
+        self.driver.find_elements_by_id(create_err_popup)
         self.assertTrue(EC.text_to_be_present_in_element((By.ID,'android:id/message'), 'Please enter your last name.'))
+        print('Please enter your last name. err msg is displayed')
         self.driver.find_element_by_id(create_popup_ok_btn).click()
 
         # Assert user has not navigated away from creation page
@@ -147,14 +161,16 @@ class create_account(unittest.TestCase):
         self.driver.implicitly_wait(1000)
 
         # fill last name with Valid input and clear password
+        print('fill last name with Valid input and clear password')
         self.driver.find_element_by_xpath(create_last_name_field).send_keys(LNAME)
-        self.driver.find_element_by_xpath(create_password_field).clear()
+        self.driver.find_element_by_xpath(create_password_adj_field).clear()
         self.driver.find_element_by_xpath(create_account_btn).click()
         self.driver.implicitly_wait(100)
 
         # assert password error message is displayed
-        self.assertTrue(self.driver.find_elements_by_id(create_err_popup).is_displayed())
+        self.driver.find_elements_by_id(create_err_popup)
         self.assertTrue(EC.text_to_be_present_in_element((By.ID,'android:id/message'), 'Password must be at least 8 characters.'))
+        print('Password must be at least 8 characters. err msg is displayed')
         self.driver.find_element_by_id(create_popup_ok_btn).click()
 
         # Assert user has not navigated away from creation page
@@ -162,11 +178,12 @@ class create_account(unittest.TestCase):
         self.driver.implicitly_wait(1000)
 
         # fill password field with Valid input complete creation
-        self.driver.find_element_by_xpath(create_password_field).send_keys(PASSWORD1)
+        self.driver.find_element_by_xpath(create_password_adj_field).send_keys(PASSWORD1)
         self.driver.find_element_by_xpath(create_account_btn).click()
         self.driver.implicitly_wait(100)
 
         # skip Onboarding.
+        print('Now Skipping Onboarding process')
         find_by_text(self, text= 'Add your picture')
         click_text(self, text= "I'll do this later")
 
@@ -185,16 +202,19 @@ class create_account(unittest.TestCase):
         
         # Assert user has been navigated to photo page
         find_by_text(self, text= 'Add your picture')
+        click_text(self, text= "I'll do this later")
+
 
         # Navigate to next page to accept terms
         find_by_text(self, text= 'Accept our terms')
         click_text(self, text= 'Next')
 
         #assert user did not leave page until terms are accepted
-        find_by_text('Read Terms of Service')
+        find_by_text(self, text='Read Terms of Service')
 
         #select to accept the terms
         self.driver.find_element_by_xpath(onboard_accept_terms_box).click()
+        click_text(self, text='Next')
 
         # Assert user has navigated to last onboarding page
         self.assertTrue(EC.text_to_be_present_in_element((By.XPATH,'/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[8]'), "Congrats on joining the Yoodlize community. We’ve got a quick tutorial to show you how it works."))
@@ -203,8 +223,10 @@ class create_account(unittest.TestCase):
         click_text(self, text= "I'll do this later")
 
         # assert user has been taken to login page
-        self.driver.find_element_by_xpath(login_ident).is_displayed()
-        
+        self.driver.implicitly_wait(1000)
+        self.driver.find_element_by_xpath(login_ident)
+        self.driver.implicitly_wait(1000)
+        print('Onboarding Skipped')
         print('test complete')
 
 def takeDown(self):
