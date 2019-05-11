@@ -28,3 +28,12 @@ def visible_accessibility_id_assert(self, element):
     else:
         print('Element is displayed')
 
+def log_out(self):
+    print('logging out')
+    self.driver.find_element_by_xpath(home_profile).click()
+    self.driver.implicitly_wait(1000)
+
+    # Assert successfully navigated to profile page and select log out
+    self.driver.find_element_by_xpath(profile_ident)
+    self.driver.find_element_by_xpath(profile_logout).click()
+    self.driver.implicitly_wait(1000)
