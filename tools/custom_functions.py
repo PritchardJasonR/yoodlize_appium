@@ -7,6 +7,7 @@ from appium.webdriver.common.mobileby import By
 from appium.webdriver.common.mobileby import MobileBy
 from appium.webdriver.common.touch_action import TouchAction
 from time import sleep
+from tools.page_objects import *
 
 def click_text(self, text):
     self.driver.find_element_by_xpath('//*[contains(@text, "{}")]'.format(text)).click()
@@ -27,6 +28,30 @@ def visible_accessibility_id_assert(self, element):
         print('Element is not displayed')
     else:
         print('Element is displayed')
+
+def login(self, email, password):
+    # Assert on home page not logged in
+    self.assertTrue(self.driver.find_element_by_xpath(home_ident).is_displayed())
+    print('User is not logged in')
+    self.driver.implicitly_wait(1000)
+    
+    # navigate to login page
+    self.driver.find_element_by_xpath(home_login_btn).click()
+    self.driver.implicitly_wait(1000)
+
+    #assert user is on login page
+    self.driver.find_element_by_xpath(login_ident).is_displayed()
+
+    # enter valid email and incorrect password
+    self.driver.find_element_by_xpath(login_email_field).send_keys(email)
+    self.driver.find_element_by_xpath(login_password_field).send_keys(password)
+
+    # click login
+    self.driver.find_element_by_xpath(login_btn).click()
+    self.driver.implicitly_wait(100)
+
+    visible_xpath_assert(self, element= home_loggedin_ident)
+    print('user is now logged in')
 
 def log_out(self):
     print('logging out')
@@ -88,3 +113,57 @@ def do_email_verif(self):
     self.driver.start_activity('com.yoodlize', activity)
 
     return recov_code
+
+    def price_search_key(self):
+        self.driver.implicitly_wait(5000)
+        key_list = []
+        row1xpath = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[6]/android.view.View/android.view.View/android.view.View[1]/android.view.View['
+        row2xpath = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[6]/android.view.View/android.view.View/android.view.View[2]/android.view.View['
+        row3xpath = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[6]/android.view.View/android.view.View/android.view.View[3]/android.view.View['
+        row4xpath = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[6]/android.view.View/android.view.View/android.view.View[4]/android.view.View['
+        xpathend = ']/android.view.View[1]/android.view.View[2]/android.view.View'
+        for index in range(1, 50):
+            path1 = f"{row1xpath}{index}{xpathend}"
+            path2 = f"{row2xpath}{index}{xpathend}"
+            path3 = f"{row3xpath}{index}{xpathend}"
+            path4 = f"{row4xpath}{index}{xpathend}"
+            self.driver.implicitly_wait(1)
+            if len(self.driver.find_elements(By.XPATH, path1)) > 0:
+                self.driver.implicitly_wait(1)
+                key_list.append(self.driver.find_element_by_xpath(f"{row1xpath}{index}{xpathend}").text)
+            elif len(self.driver.find_elements(By.XPATH, path2)) > 0:
+                key_list.append(self.driver.find_element_by_xpath(f"{row2xpath}{index}{xpathend}").text)
+            elif len(self.driver.find_elements(By.XPATH, path3)) > 0:
+                key_list.append(self.driver.find_element_by_xpath(f"{row3xpath}{index}{xpathend}").text)
+            elif len(self.driver.find_elements(By.XPATH, path4)) > 0:
+                key_list.append(self.driver.find_element_by_xpath(f"{row4xpath}{index}{xpathend}").text)            
+            else:
+                break
+    return key_list
+
+def search_cards(self):
+    self.driver.implicitly_wait(5000)
+    search_list = []
+    row1xpath = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[6]/android.view.View[2]/android.view.View/android.view.View[1]/android.view.View['
+    row2xpath = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[6]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View['
+    row3xpath = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[6]/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View['
+    row4xpath = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[6]/android.view.View[2]/android.view.View/android.view.View[4]/android.view.View['
+    xpathend = ']/android.view.View[3]'
+    for index in range(1, 50):
+        path1 = f"{row1xpath}{index}{xpathend}"
+        path2 = f"{row2xpath}{index}{xpathend}"
+        path3 = f"{row3xpath}{index}{xpathend}"
+        path4 = f"{row4xpath}{index}{xpathend}"
+        self.driver.implicitly_wait(1)
+        if len(self.driver.find_elements(By.XPATH, path1)) > 0:
+            self.driver.implicitly_wait(1)
+            search_list.append(self.driver.find_element_by_xpath(f"{row1xpath}{index}{xpathend}").text)
+        elif len(self.driver.find_elements(By.XPATH, path2)) > 0:
+            search_list.append(self.driver.find_element_by_xpath(f"{row2xpath}{index}{xpathend}").text)
+        elif len(self.driver.find_elements(By.XPATH, path3)) > 0:
+            search_list.append(self.driver.find_element_by_xpath(f"{row3xpath}{index}{xpathend}").text)
+        elif len(self.driver.find_elements(By.XPATH, path4)) > 0:
+            search_list.append(self.driver.find_element_by_xpath(f"{row4xpath}{index}{xpathend}").text)            
+        else:
+            break
+    return search_list
