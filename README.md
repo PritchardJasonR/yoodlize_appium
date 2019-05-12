@@ -2,12 +2,11 @@
  
  Automating Yoodlize Mobile App For Android using Appium with Python
  
- Organization with take place on Trello
+ Organization will take place on Trello
  Link to trello board:
  https://trello.com/invite/b/iwY5LjnT/8254e40e002001ff26549ef3be672d66/appium
  
  ~ Firstly Download files
- 
  ~ We will be using python 3 for this project
  https://www.python.org/
  
