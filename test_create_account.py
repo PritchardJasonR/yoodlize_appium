@@ -21,7 +21,7 @@ class create_account(unittest.TestCase):
         self.driver = des_cap(self, device_name= 'Android')
         
     def test_create_account(self):
-        EMAIL= 'Z.zGranger@gmail.gov'
+        EMAIL= 'Z.zGrasssnger@gmail.gov'
         PASSWORD1 = '12345678Test'
         PASSWORD2 = '12345678Test'
         FNAME = 'Tim'
