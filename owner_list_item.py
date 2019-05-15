@@ -78,14 +78,31 @@ class owner_list_item(unittest.TestCase):
         click_text(self, text= 'Electronics')
 
         # Now delete title to proc an err msg
-        print('Now delete title to proc an err msg')
+        print('Now delete title and and verif next button non functional')
+        self.driver.find_element_by_xpath(list_page1_item_title).clear()
+        self.driver.implicitly_wait(1000)
+        self.driver.find_element_by_xpath(list_page1_save_next_btn).click()
 
+        # Assert user is not navigated away
+        print('Assert user is not navigated away')
+        self.driver.implicitly_wait(1000)
+        self.driver.find_element_by_xpath(list_page1_ident).is_displayed()
 
-        print('')
+        # Fill title field and delete description field and again select next btn
+        print('Fill title field and delete description field and again select next btn')
+        self.driver.find_element_by_xpath(list_page1_item_title).send_keys(title)
+        self.driver.find_element_by_xpath(list_page1_item_description).clear()
+        self.driver.find_element_by_xpath(list_page1_save_next_btn).click()
 
-        print('')
+        # Assert user is not navigated away
+        self.driver.implicitly_wait(1000)
+        self.driver.find_element_by_xpath(list_page1_ident).is_displayed()
 
-        print('')
+        # fill description and select next btn
+        print('fill description and select next btn')
+        self.driver.find_element_by_xpath(list_page1_item_description).send_keys(description)
+        self.driver.find_element_by_xpath(list_page1_save_next_btn).click()
+
 
         print('')
 
