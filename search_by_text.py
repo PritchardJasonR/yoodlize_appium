@@ -35,10 +35,74 @@ class search_by_text(unittest.TestCase):
         print('Driver Created')
 
         self.driver.implicitly_wait(1000)
+        
         # Assert on home page not logged in
         self.assertTrue(self.driver.find_element_by_xpath(home_ident).is_displayed())
         print('Test Started')
         self.driver.implicitly_wait(1000)
+        """
+         Test Searching by text from home page not logged in
+        """
+        # Test Searching by text from home page not logged in
+        print('Test Searching by text from home page not logged in')
+        self.driver.find_element_by_xpath(home_search_bar).send_keys('Test Rock')
+        self.driver.find_element_by_xpath(home_search_btn).click()
+        self.driver.implicitly_wait(1000)
+        print('selected search btn')
+
+        # Reviewing Results
+        print('Reviewing Results')
+        search_key = search_cards(self)
+        print(search_key)
+
+        # 
+        print('')
+        print('')
+
+        # 
+        print('')
+        print('')
+
+        # 
+        print('')
+        print('')
+
+        # 
+        print('')
+        print('')
+
+        # 
+        print('')
+        print('')
+
+        # 
+        print('')
+        print('')
+
+        # 
+        print('')
+        print('')
+
+        # 
+        print('')
+        print('')
+
+        # 
+        print('')
+        print('')
+
+        # 
+        print('')
+        print('')
+
+        # 
+        print('')
+        print('')
+
+        # 
+        print('')
+        print('')
+
         
         print('test complete')
 
