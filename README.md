@@ -27,9 +27,9 @@
  ~ Now Install the files in same order
  
  ~ Now add system enviroment variables
- ANDROID_HOME = Path to your android SDK;\n
- ANDROID_SDK_ROOT = Path to your android SDK\n
- JAVA_HOME = path to JAVA JDK FOLDER\n
+ 1. ANDROID_HOME = Path to your android SDK
+ 2. ANDROID_SDK_ROOT = Path to your android SDK
+ 3. JAVA_HOME = path to JAVA JDK FOLDER
  
  ~ Add to the path in your envirement variables
  %JAVA_HOME%\bin
