@@ -13,21 +13,31 @@ def click_text(self, text):
     self.driver.find_element_by_xpath('//*[contains(@text, "{}")]'.format(text)).click()
 
 def find_by_text(self, text):
-    self.driver.find_element_by_xpath('//*[contains(@text, "{}")]'.format(text)).is_displayed()
+    self.driver.implicitly_wait(1)
+    if not self.driver.find_element_by_xpath('//*[contains(@text, "{}")]'.format(text)).is_displayed():
+        print('Element is not displayed')
+        return False
+    else:
+        print('Element is displayed')
+        return True
 
 def visible_xpath_assert(self, element):        
     self.driver.implicitly_wait(1)
     if not self.driver.find_elements(By.XPATH, element):
         print('Element is not displayed')
+        return False
     else:
         print('Element is displayed')
+        return True
 
 def visible_accessibility_id_assert(self, element):        
     self.driver.implicitly_wait(1)
     if not self.driver.find_elements(MobileBy.ACCESSIBILITY_ID, element):
         print('Element is not displayed')
+        return False
     else:
         print('Element is displayed')
+        return True
 
 def login(self, email, password):
     # Assert on home page not logged in
@@ -167,3 +177,8 @@ def search_cards(self):
         else:
             break
     return search_list
+
+def search_bar(self, text):
+    self.driver.find_element_by_xpath(search_search_bar).send_keys(text)
+    self.driver.find_element_by_xpath(search_search_btn).click()
+    self.driver.find_element_by_xpath(search_search_bar).clear()

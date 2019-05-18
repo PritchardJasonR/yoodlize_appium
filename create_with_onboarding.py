@@ -21,7 +21,14 @@ class create_account_with_onboarding(unittest.TestCase):
         self.driver = des_cap(self, device_name= 'Android')
         
     def test_create_account_w_onboard(self):
-        EMAIL= 'Z.q22eswe333r@gmail.com'
+        file = open(PATH("plus_one.txt"), 'r')
+        counter = int(file.readline())+1
+        file.close()
+        counter_str = str(counter)
+        file = open(PATH("plus_one.txt"), 'w')
+        file.write(counter_str)
+        file.close()
+        EMAIL = f"z_fakemail{counter}@yoodlize.co"
         PASSWORD1 = '12345678Test'
         PASSWORD2 = '12345678Test'
         FNAME = 'Tim'

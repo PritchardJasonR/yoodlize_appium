@@ -48,60 +48,71 @@ class search_by_text(unittest.TestCase):
         self.driver.find_element_by_xpath(home_search_bar).send_keys('Test Rock')
         self.driver.find_element_by_xpath(home_search_btn).click()
         self.driver.implicitly_wait(1000)
-        print('selected search btn')
+        print('>>  selected search btn')
 
         # Reviewing Results
         print('Reviewing Results')
-        search_key = search_cards(self)
-        print(search_key)
+        find_by_text(self, text='Test Rock')
+        print(">>  searching from home screen currently is unreliable")
+
+        # fill search bar
+        print('fill search bar')
+        self.driver.find_element_by_xpath(search_search_bar).send_keys(FULL_NAME)
+        self.driver.find_element_by_xpath(search_search_btn).click()
+        self.driver.find_element_by_xpath(search_search_bar).clear()
+        self.driver.implicitly_wait(300)
+        self.assertTrue(find_by_text(self, text= FULL_NAME))
+        print('>>  At Least One Result Is Displayed With Exact Text That Was Searched For')
+
+        # Search by partial text
+        print('Search by partial text')
+        search_bar(self, text= PARTIAL)
+        self.driver.implicitly_wait(300)
+        self.assertTrue(find_by_text(self, text= FULL_NAME))
+        self.driver.implicitly_wait(300)
+        find_by_text(self, text= 'rock')
+
+        print('>> At Least One Result Is Displayed With partial Text That Was Searched For')
 
         # 
         print('')
-        print('')
+        print('>> ')
 
         # 
         print('')
-        print('')
+        print('>> ')
 
         # 
         print('')
-        print('')
+        print('>> ')
 
         # 
         print('')
-        print('')
+        print('>> ')
 
         # 
         print('')
-        print('')
+        print('>> ')
 
         # 
         print('')
-        print('')
+        print('>> ')
 
         # 
         print('')
-        print('')
+        print('>> ')
 
         # 
         print('')
-        print('')
+        print('>> ')
 
         # 
         print('')
-        print('')
+        print('>> ')
 
         # 
         print('')
-        print('')
-
-        # 
-        print('')
-        print('')
-
-        # 
-        print('')
-        print('')
+        print('>> ')
 
         
         print('test complete')
