@@ -26,12 +26,9 @@ class search_by_text(unittest.TestCase):
         Search by text function
         """
         FULL_NAME = 'Test item1'
-        PARTIAL = 'Test'
-        CASE_SENSITIVE1 = 'ccoon'
-        CASE_SENSITIVE2 = 'test rock'
-
-
-
+        PARTIAL1 = 'Test'
+        partial_lowercase = 'ccoon'
+        full_lowercase = 'test rock'
         print('Driver Created')
 
         self.driver.implicitly_wait(1000)
@@ -59,63 +56,45 @@ class search_by_text(unittest.TestCase):
         print('fill search bar')
         self.driver.find_element_by_xpath(search_search_bar).send_keys(FULL_NAME)
         self.driver.find_element_by_xpath(search_search_btn).click()
-        self.driver.find_element_by_xpath(search_search_bar).clear()
+        slay_list = search_cards(self)
         self.driver.implicitly_wait(300)
+        print(slay_list)
+        self.assertTrue(search_results(self, text= FULL_NAME, results_in_list= slay_list))
         self.assertTrue(find_by_text(self, text= FULL_NAME))
         print('>>  At Least One Result Is Displayed With Exact Text That Was Searched For')
-
+        
         # Search by partial text
         print('Search by partial text')
-        search_bar(self, text= PARTIAL)
+        search_bar(self, text= PARTIAL1)
         self.driver.implicitly_wait(300)
-        self.assertTrue(find_by_text(self, text= FULL_NAME))
+        play_list = search_cards(self)
+        print(play_list)
         self.driver.implicitly_wait(300)
-        find_by_text(self, text= 'rock')
-
+        self.assertTrue(search_results(self, text= PARTIAL1, results_in_list= play_list))
+        
         print('>> At Least One Result Is Displayed With partial Text That Was Searched For')
 
-        # 
-        print('')
-        print('>> ')
+        # search by partial lower case
+        print('search by partial lower case')
+        search_bar(self, text= partial_lowercase)
+        self.driver.implicitly_wait(300)
+        play_list = search_cards(self)
+        print(play_list)
+        self.driver.implicitly_wait(300)
+        self.assertTrue(search_results(self, text= partial_lowercase, results_in_list= play_list))
+        print('>> partial_lowercase results found ')
 
-        # 
-        print('')
-        print('>> ')
+        # Full Lower Case Looking for single result
+        print('Full Lower Case Looking for single result')
+        search_bar(self, text= full_lowercase)
+        self.driver.implicitly_wait(300)
+        play_list = search_cards(self)
+        print(play_list)
+        self.driver.implicitly_wait(300)
+        self.assertEqual(len(play_list), 1)
+        print('>> only one result was found ')
 
-        # 
-        print('')
-        print('>> ')
-
-        # 
-        print('')
-        print('>> ')
-
-        # 
-        print('')
-        print('>> ')
-
-        # 
-        print('')
-        print('>> ')
-
-        # 
-        print('')
-        print('>> ')
-
-        # 
-        print('')
-        print('>> ')
-
-        # 
-        print('')
-        print('>> ')
-
-        # 
-        print('')
-        print('>> ')
-
-        
-        print('test complete')
+        print('test complete as passed')
 
 def takeDown(self):
         self.driver.quit()
