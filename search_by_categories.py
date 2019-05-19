@@ -54,7 +54,6 @@ class search_by_categories(unittest.TestCase):
         self.driver.find_element_by_xpath(search_categories_business_equip).click()
         self.driver.implicitly_wait(300)
         business_equip_list = search_cards(self)
-        print(business_equip_list)
     
 
         # Electronics category filter

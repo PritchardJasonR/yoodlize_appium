@@ -21,7 +21,14 @@ class create_account(unittest.TestCase):
         self.driver = des_cap(self, device_name= 'Android')
         
     def test_create_account(self):
-        EMAIL= 'Z.zGrasssnger@gmail.gov'
+        file = open(PATH("plus_one.txt"), 'r')
+        counter = int(file.readline())+1
+        file.close()
+        counter_str = str(counter)
+        file = open(PATH("plus_one.txt"), 'w')
+        file.write(counter_str)
+        file.close()
+        EMAIL = f"z_fakemail{counter}@yoodlize.co"
         PASSWORD1 = '12345678Test'
         PASSWORD2 = '12345678Test'
         FNAME = 'Tim'
@@ -190,7 +197,8 @@ class create_account(unittest.TestCase):
         # Assert user has been navigated to next screen to link email
         print('Skipping Email verif but asserting email is correctly populated in field')
         find_by_text(self, text= 'Verify your email')
-        self.assertTrue(EC.text_to_be_present_in_element((By.ID,'/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[8]'), f'{EMAIL}'))
+        email_field = self.driver.find_element_by_xpath(ob_email_field).text
+        self.assertEqual(email_field, EMAIL)
         
         # select the I'll do this later
         click_text(self, text= "I'll do this later")
