@@ -53,10 +53,8 @@ class search_by_categories(unittest.TestCase):
         # select Business equipment filter
         self.driver.find_element_by_xpath(search_categories_business_equip).click()
         self.driver.implicitly_wait(300)
-        if not self.assertTrue(visible_xpath_assert(self, element= search_card1)):
-            print('>>  There were no results for category')
-        else:
-            print('>>  At Least One Result Is Displayed in the category')
+        business_equip_list = search_cards(self)
+        print(business_equip_list)
     
 
         # Electronics category filter
@@ -64,13 +62,16 @@ class search_by_categories(unittest.TestCase):
         self.driver.find_element_by_xpath(search_categories_btn).click()
         self.driver.implicitly_wait(300)
         self.assertTrue(visible_xpath_assert(self, element= search_categories_ident))
-        # select Business equipment filter
+        # select Electronics filter
         self.driver.find_element_by_xpath(search_categories_eletronics).click()
         self.driver.implicitly_wait(300)
-        if  not self.assertTrue(visible_xpath_assert(self, element= search_card1)):
-            print('>>  There were no results for category')
+        electronics_list = search_cards(self)
+        if len(electronics_list) > 0:
+            self.assertNotEqual(business_equip_list, electronics_list)
+            print('>>  business and electonics returned different results')
         else:
-            print('>>  At Least One Result Is Displayed in the category')
+            print('>>  Filter returned no results')
+        
      
         # Recreational Vehicles category filter
         print('Recreational Vehicles category filter')
@@ -80,10 +81,13 @@ class search_by_categories(unittest.TestCase):
         # select Recreational Vehicles filter
         self.driver.find_element_by_xpath(search_categories_rec_vehicles).click()
         self.driver.implicitly_wait(300)
-        if not self.assertTrue(visible_xpath_assert(self, element= search_card1)):
-            print('>>  There were no results for category')
+        rec_veh = search_cards(self)
+        if len(rec_veh) > 0:
+            self.assertNotEqual(rec_veh ,business_equip_list)
+            self.assertNotEqual(rec_veh, electronics_list)
+            print('>>  Recreational Vehicles reutnred different results from previous lists')
         else:
-            print('>>  At Least One Result Is Displayed in the category')
+            print('>>  Filter returned no results')
         
         # clothing category filter
         print('clothing category filter')
@@ -93,10 +97,14 @@ class search_by_categories(unittest.TestCase):
         # select Clothing filter
         self.driver.find_element_by_xpath(search_categories_clothing).click()
         self.driver.implicitly_wait(300)
-        if not self.assertTrue(visible_xpath_assert(self, element= search_card1)):
-            print('>>  There were no results for category')
+        cloth_list = search_cards(self)
+        if len(cloth_list) > 0:
+            self.assertNotEqual(cloth_list ,business_equip_list)
+            self.assertNotEqual(cloth_list, electronics_list)
+            self.assertNotEqual(cloth_list, rec_veh)
+            print('>>  Clothing filter reutnred different results from previous lists')
         else:
-            print('>>  At Least One Result Is Displayed in the category')
+            print('>>  Filter returned no results')
         
 
         # Home and Kitchen category filter
@@ -106,10 +114,15 @@ class search_by_categories(unittest.TestCase):
         self.assertTrue(visible_xpath_assert(self, element= search_categories_ident))
         self.driver.find_element_by_xpath(search_categories_home_n_kitchen).click()
         self.driver.implicitly_wait(300)
-        if not self.assertTrue(visible_xpath_assert(self, element= search_card1)):
-            print('>>  There were no results for category')
+        home_n_kitchen_list = search_cards(self)
+        if len(home_n_kitchen_list) > 0:
+            self.assertNotEqual(home_n_kitchen_list ,business_equip_list)
+            self.assertNotEqual(home_n_kitchen_list, electronics_list)
+            self.assertNotEqual(home_n_kitchen_list, rec_veh)
+            self.assertNotEqual(home_n_kitchen_list, cloth_list)
+            print('>>  Home and Kitchen filter reutnred different results from previous lists')
         else:
-            print('>>  At Least One Result Is Displayed in the category')
+            print('>>  Filter returned no results')
         
         
         # Lawn and Garden category filter
@@ -119,10 +132,16 @@ class search_by_categories(unittest.TestCase):
         self.assertTrue(visible_xpath_assert(self, element= search_categories_ident))
         self.driver.find_element_by_xpath(search_categories_lawn_n_garden).click()
         self.driver.implicitly_wait(300)
-        if not self.assertTrue(visible_xpath_assert(self, element= search_card1)):
-            print('>>  There were no results for category')
+        lawn_n_garden_list = search_cards(self)
+        if len(lawn_n_garden_list) > 0:
+            self.assertNotEqual(lawn_n_garden_list ,business_equip_list)
+            self.assertNotEqual(lawn_n_garden_list, electronics_list)
+            self.assertNotEqual(lawn_n_garden_list, rec_veh)
+            self.assertNotEqual(lawn_n_garden_list, cloth_list)
+            self.assertNotEqual(lawn_n_garden_list, home_n_kitchen_list)
+            print('>>  Clothing filter reutnred different results from previous lists')
         else:
-            print('>>  At Least One Result Is Displayed in the category')
+            print('>>  Filter returned no results')
         
 
         # Outdoor gear category filter
@@ -132,12 +151,18 @@ class search_by_categories(unittest.TestCase):
         self.assertTrue(visible_xpath_assert(self, element= search_categories_ident))
         self.driver.find_element_by_xpath(search_categories_outdoor_gear).click()
         self.driver.implicitly_wait(300)
-        if not self.assertTrue(visible_xpath_assert(self, element= search_card1)):
-            print('>>  There were no results for category')
+        outdoor_list = search_cards(self)
+        if len(outdoor_list) > 0:
+            self.assertNotEqual(outdoor_list ,business_equip_list)
+            self.assertNotEqual(outdoor_list, electronics_list)
+            self.assertNotEqual(outdoor_list, rec_veh)
+            self.assertNotEqual(outdoor_list, cloth_list)
+            self.assertNotEqual(outdoor_list, home_n_kitchen_list)
+            self.assertNotEqual(outdoor_list, lawn_n_garden_list)
+            print('>>  Outdoor gear filter reutnred different results from previous lists')
         else:
-            print('>>  At Least One Result Is Displayed in the category')
+            print('>>  Filter returned no results')
         
-
         # Party and wedding Equip
         print('Party and wedding Equip')
         self.driver.find_element_by_xpath(search_categories_btn).click()
@@ -145,10 +170,18 @@ class search_by_categories(unittest.TestCase):
         self.assertTrue(visible_xpath_assert(self, element= search_categories_ident))
         self.driver.find_element_by_xpath(search_categories_party_n_wedding).click()
         self.driver.implicitly_wait(300)
-        if not self.assertTrue(visible_xpath_assert(self, element= search_card1)):
-            print('>>  There were no results for category')
+        party_n_wedding = search_cards(self)
+        if len(party_n_wedding) > 0:
+            self.assertNotEqual(party_n_wedding, business_equip_list)
+            self.assertNotEqual(party_n_wedding, electronics_list)
+            self.assertNotEqual(party_n_wedding, rec_veh)
+            self.assertNotEqual(party_n_wedding, cloth_list)
+            self.assertNotEqual(party_n_wedding, home_n_kitchen_list)
+            self.assertNotEqual(party_n_wedding, lawn_n_garden_list)
+            self.assertNotEqual(party_n_wedding, outdoor_list)
+            print('>>  Party and wedding filter reutnred different results from previous lists')
         else:
-            print('>>  At Least One Result Is Displayed in the category')
+            print('>>  Filter returned no results')
         
 
         # Venues category filter
@@ -158,10 +191,19 @@ class search_by_categories(unittest.TestCase):
         self.assertTrue(visible_xpath_assert(self, element= search_categories_ident))
         self.driver.find_element_by_xpath(search_categories_venues).click()
         self.driver.implicitly_wait(300)
-        if not self.assertTrue(visible_xpath_assert(self, element= search_card1)):
-            print('>>  There were no results for category')
+        venues_list = search_cards(self)
+        if len(venues_list) > 0:
+            self.assertNotEqual(venues_list, business_equip_list)
+            self.assertNotEqual(venues_list, electronics_list)
+            self.assertNotEqual(venues_list, rec_veh)
+            self.assertNotEqual(venues_list, cloth_list)
+            self.assertNotEqual(venues_list, home_n_kitchen_list)
+            self.assertNotEqual(venues_list, lawn_n_garden_list)
+            self.assertNotEqual(venues_list, outdoor_list)
+            self.assertNotEqual(venues_list, party_n_wedding)
+            print('>>  Venues filter reutnred different results from previous lists')
         else:
-            print('>>  At Least One Result Is Displayed in the category')
+            print('>>  Filter returned no results')
         
 
         # Local Experts category filter
@@ -171,11 +213,20 @@ class search_by_categories(unittest.TestCase):
         self.assertTrue(visible_xpath_assert(self, element= search_categories_ident))
         self.driver.find_element_by_xpath(search_categories_local_experts).click()
         self.driver.implicitly_wait(300)
-        if not self.assertTrue(visible_xpath_assert(self, element= search_card1)):
-            print('>>  There were no results for category')
+        local_experts_list = search_cards(self)
+        if len(local_experts_list) > 0:
+            self.assertNotEqual(local_experts_list, business_equip_list)
+            self.assertNotEqual(local_experts_list, electronics_list)
+            self.assertNotEqual(local_experts_list, rec_veh)
+            self.assertNotEqual(local_experts_list, cloth_list)
+            self.assertNotEqual(local_experts_list, home_n_kitchen_list)
+            self.assertNotEqual(local_experts_list, lawn_n_garden_list)
+            self.assertNotEqual(local_experts_list, outdoor_list)
+            self.assertNotEqual(local_experts_list, party_n_wedding)
+            self.assertNotEqual(local_experts_list, venues_list)
+            print('>>  Local Experts filter reutnred different results from previous lists')
         else:
-            print('>>  At Least One Result Is Displayed in the category')
-        
+            print('>>  Filter returned no results')
 
         # Expirences category filter
         print('Expirences category filter')
@@ -184,11 +235,22 @@ class search_by_categories(unittest.TestCase):
         self.assertTrue(visible_xpath_assert(self, element= search_categories_ident))
         self.driver.find_element_by_xpath(search_categories_experiences).click()
         self.driver.implicitly_wait(300)
-        if not self.assertTrue(visible_xpath_assert(self, element= search_card1)):
-            print('>>  There were no results for category')
+        expirences_list = search_cards(self)
+        if len(expirences_list) > 0:
+            self.assertNotEqual(expirences_list, business_equip_list)
+            self.assertNotEqual(expirences_list, electronics_list)
+            self.assertNotEqual(expirences_list, rec_veh)
+            self.assertNotEqual(expirences_list, cloth_list)
+            self.assertNotEqual(expirences_list, home_n_kitchen_list)
+            self.assertNotEqual(expirences_list, lawn_n_garden_list)
+            self.assertNotEqual(expirences_list, outdoor_list)
+            self.assertNotEqual(expirences_list, party_n_wedding)
+            self.assertNotEqual(expirences_list, venues_list)
+            self.assertNotEqual(expirences_list, local_experts_list)
+            print('>>  Expirences filter reutnred different results from previous lists')
         else:
-            print('>>  At Least One Result Is Displayed in the category')
-        
+            print('>>  Filter returned no results')
+
 
         # Sporting Equip category filter
         print('Sporting Equip category filter')
@@ -197,11 +259,36 @@ class search_by_categories(unittest.TestCase):
         self.assertTrue(visible_xpath_assert(self, element= search_categories_ident))
         self.driver.find_element_by_xpath(search_categories_sporting_equip).click()
         self.driver.implicitly_wait(300)
-        if not self.assertTrue(visible_xpath_assert(self, element= search_card1)):
-            print('>>  There were no results for category')
+        sporting_equip_list = search_cards(self)
+        if len(sporting_equip_list) > 0:
+            self.assertNotEqual(sporting_equip_list, business_equip_list)
+            self.assertNotEqual(sporting_equip_list, electronics_list)
+            self.assertNotEqual(sporting_equip_list, rec_veh)
+            self.assertNotEqual(sporting_equip_list, cloth_list)
+            self.assertNotEqual(sporting_equip_list, home_n_kitchen_list)
+            self.assertNotEqual(sporting_equip_list, lawn_n_garden_list)
+            self.assertNotEqual(sporting_equip_list, outdoor_list)
+            self.assertNotEqual(sporting_equip_list, party_n_wedding)
+            self.assertNotEqual(sporting_equip_list, venues_list)
+            self.assertNotEqual(sporting_equip_list, local_experts_list)
+            self.assertNotEqual(sporting_equip_list, expirences_list)
+            print('>>  Expirences filter reutnred different results from previous lists')
         else:
-            print('>>  At Least One Result Is Displayed in the category')
-        
+            print('>>  Filter returned no results')
+
+        print(business_equip_list)
+        print(electronics_list)
+        print(rec_veh)
+        print(lawn_n_garden_list)
+        print(home_n_kitchen_list)
+        print(sporting_equip_list)
+        print(local_experts_list)
+        print(venues_list)
+        print(expirences_list)
+        print(cloth_list)
+        print(outdoor_list)
+        print(party_n_wedding)
+
         
         print('test complete as passed')
 
