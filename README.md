@@ -49,7 +49,8 @@
  
  pip install Appium-Python-Client
  
- ~ Add 2 Extentions to vs code
+ ~ Add 2 Extentions to vs code;
+ 
  python;
  
  code runner;
