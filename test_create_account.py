@@ -223,8 +223,8 @@ class create_account(unittest.TestCase):
         click_text(self, text='Next')
 
         # Assert user has navigated to last onboarding page
-        self.assertTrue(EC.text_to_be_present_in_element((By.XPATH,'/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[8]'), "Congrats on joining the Yoodlize community. We’ve got a quick tutorial to show you how it works."))
-        
+        ob_final = self.driver.find_element_by_xpath(onboard_final_ident).text
+        self.assertEqual(ob_final, "Congrats on joining the Yoodlize community. We’ve got a quick tutorial to show you how it works.")
         # finalize onboarding process
         click_text(self, text= "I'll do this later")
 

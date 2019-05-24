@@ -133,8 +133,6 @@ def price_search_key(self):
     for index in range(1, 50):
         path1 = f"{row1xpath}{index}{xpathend}"
         path2 = f"{row2xpath}{index}{xpathend}"
-        path3 = f"{row3xpath}{index}{xpathend}"
-        path4 = f"{row4xpath}{index}{xpathend}"
         self.driver.implicitly_wait(1)
         if len(self.driver.find_elements(By.XPATH, path1)) > 0:
             self.driver.implicitly_wait(1)
