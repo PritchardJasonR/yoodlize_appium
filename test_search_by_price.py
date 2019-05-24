@@ -1,6 +1,5 @@
 import os
 import unittest
-import re
 from appium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -86,9 +85,13 @@ class search_by_price(unittest.TestCase):
         # run cust func for fun
         price_check = price_search_key(self)
         print(price_check)
-        for price_ints in price_check:
-            price_check.rstrip(str(["$","/day"]))
+        # for price_ints in price_check:
+        #     price_ints = price_ints.strip(str(["$","/aday"]))
+        # price_check = list(map(int, price_check))
+        print(price_check)
         print(price_ints)
+        price_ints = [s for s in price_check if s.isdigit()]
+        print(price_check)
         print('>>  ')
 
         # 
