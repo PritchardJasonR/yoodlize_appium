@@ -85,14 +85,16 @@ class search_by_price(unittest.TestCase):
         # run cust func for fun
         price_check = price_search_key(self)
         print(price_check)
-        # for price_ints in price_check:
-        #     price_ints = price_ints.strip(str(["$","/aday"]))
-        # price_check = list(map(int, price_check))
-        print(price_check)
-        print(price_ints)
-        price_ints = [s for s in price_check if s.isdigit()]
-        print(price_check)
-        print('>>  ')
+
+        prices = [price_int.strip("$/day") for price_int in price_check]
+        print(prices)
+        results = list(map(int, prices))
+        print(results)
+        for each in results:
+            print (each)
+            assert each <= 20
+        
+        print('>> no result was greater then $20 max limit set for price search ')
 
         # 
         print('')
