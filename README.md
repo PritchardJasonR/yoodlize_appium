@@ -41,16 +41,19 @@
  
  Restart computer
  
- ~ Command line installs 
+ ~ Command line installs;
+ 
  npm install -g appium
  
  npm install wd
  
  pip install Appium-Python-Client
  
- ~ Add 2 Extentions to vs code
- python
- code runner
+ ~ Add 2 Extentions to vs code;
+ 
+ python;
+ 
+ code runner;
  
 
  
