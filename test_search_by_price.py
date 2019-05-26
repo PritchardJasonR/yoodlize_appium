@@ -82,31 +82,155 @@ class search_by_price(unittest.TestCase):
         self.driver.implicitly_wait(500)
         print('>>  At least on result is displayed')
 
-        # run cust func for fun
+        # get list for prices
+        print('getting list for prices')
         price_check = price_search_key(self)
         print(price_check)
 
+        # convert list to ints and assert < 20 as set by filter
+        print('convert list to ints and assert < 20 as set by filter')
         prices = [price_int.strip("$/day") for price_int in price_check]
-        print(prices)
         results = list(map(int, prices))
-        print(results)
         for each in results:
-            print (each)
-            assert each <= 20
+            assert each <= 20      
+        print('>>  no result was greater then $20 max limit set for price search ')
+
+        # Now set max to $5
+        print('Now set max to $5')
+        self.driver.find_element_by_xpath(search_advanced_btn).click()
+        self.driver.implicitly_wait(500)
+        self.assertTrue(visible_xpath_assert(self, element= search_adv_ident))
+        min_value = self.driver.find_element_by_xpath(search_adv_price_min_indicator).text
+        self.assertEqual(min_value, '1')
+        print('>>  Min value is set to 1')
         
-        print('>> no result was greater then $20 max limit set for price search ')
+        print('setting maximum value to 5')
+        self.driver.swipe(start_x=275, start_y=1450, end_x=149, end_y=1450, duration=1400)
+        self.driver.implicitly_wait(1000)
+        max_value = self.driver.find_element_by_xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[5]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[19]').text
+        self.assertEqual(max_value, '5')
+        print('>>  Max value is set to 5')
+        
+        # select filter save btn
+        print('select filter save btn')
+        self.driver.find_element_by_xpath(search_adv_save_all_filters).click()
+        print('>>  filters Saved')
+        
+        # assert on results page with at least one result
+        print('assert on results page with at least one result')
+        self.driver.implicitly_wait(500)
+        self.assertTrue(visible_xpath_assert(self, element= price_card1))
+        self.driver.implicitly_wait(500)
+        print('>>  At least on result is displayed')
 
-        # 
-        print('')
-        print('>>  ')
+        # get list for prices
+        print('getting list for prices')
+        price_check = price_search_key(self)
+        print(price_check)
 
-        # 
-        print('')
-        print('>>  ')
+        # convert list to ints and assert < 20 as set by filter
+        print('convert list to ints and assert < 20 as set by filter')
+        prices = [price_int.strip("$/day") for price_int in price_check]
+        results = list(map(int, prices))
+        for each in results:
+            assert each <= 5      
+        print('>>  no result was greater then $5 max limit set for price search ')
 
-        # 
-        print('')
-        print('>>  ')
+        print('Now set max back to 100 and test min filter')
+        self.driver.find_element_by_xpath(search_advanced_btn).click()
+        self.driver.implicitly_wait(500)
+        self.assertTrue(visible_xpath_assert(self, element= search_adv_ident))
+        min_value = self.driver.find_element_by_xpath(search_adv_price_min_indicator).text
+        self.assertEqual(min_value, '1')
+        print('>>  Min value is set to 1')
+        
+        print('setting maximum value to 100')
+        self.driver.swipe(start_x=149, start_y=1450, end_x=959, end_y=1450, duration=1400)
+        self.driver.implicitly_wait(1000)
+        max_value = self.driver.find_element_by_xpath(search_adv_price_max_indicator).text
+        self.assertEqual(max_value, '100')
+        print('>>  Max value is set to 100')
+
+        """
+        now test min filter
+        """
+        # Now set min value to 90
+        print('Now set min value to 90')
+        self.driver.swipe(start_x=125, start_y=1450, end_x=883, end_y=1450, duration=1400)
+        min_value = self.driver.find_element_by_xpath(search_adv_price_min_indicator).text
+        self.assertEqual(min_value, '90')
+        print('>>  min value is now set to 90')
+
+        # select filter save btn
+        print('select filter save btn')
+        self.driver.find_element_by_xpath(search_adv_save_all_filters).click()
+        print('>>  min filter Saved')
+
+        # assert on results page with at least one result
+        print('assert on results page with at least one result')
+        self.driver.implicitly_wait(500)
+        self.assertTrue(visible_xpath_assert(self, element= price_card1))
+        self.driver.implicitly_wait(500)
+        print('>>  At least on result is displayed')
+
+        # get list for prices
+        print('getting list for prices')
+        price_check = price_search_key(self)
+        print(price_check)
+
+        # convert list to ints and assert 90 < 100 as set by filter
+        print('convert list to ints and assert 100 < 90 as set by filter')
+        prices = [price_int.strip("$/day") for price_int in price_check]
+        results = list(map(int, prices))
+        for each in results:
+            assert each <= 100
+            assert each >= 90     
+        print('>>  no result was greater then $90 min limit set for price search and less than 100 for max ')
+
+        # now set max to 90 aswell
+        print('now set min and max to 40')
+        self.driver.find_element_by_xpath(search_advanced_btn).click()
+        self.driver.implicitly_wait(500)
+        self.assertTrue(visible_xpath_assert(self, element= search_adv_ident))
+        min_value = self.driver.find_element_by_xpath(search_adv_price_min_indicator).text
+        self.assertEqual(min_value, '90')
+        print('>>  Min value is set to 90')
+        
+        print('setting minimum and  maximum value to 40')
+        self.driver.swipe(start_x=883, start_y=1450, end_x=455, end_y=1450, duration=1500)
+        self.driver.implicitly_wait(1000)
+        self.driver.swipe(start_x=959, start_y=1450, end_x=415, end_y=1450, duration=1500)
+        self.driver.implicitly_wait(1000)
+        min_value = self.driver.find_element_by_xpath(search_adv_price_min_indicator).text
+        self.assertEqual(min_value, '40')
+        max_value = self.driver.find_element_by_xpath(search_adv_price_max_indicator).text
+        self.assertEqual(max_value, '40')
+        print('>>  Max and min value is set to 40')
+
+        # select filter save btn
+        print('select filter save btn')
+        self.driver.find_element_by_xpath(search_adv_save_all_filters).click()
+        print('>>  min filter Saved')
+
+        # assert on results page with at least one result
+        print('assert on results page with at least one result')
+        self.driver.implicitly_wait(500)
+        self.assertTrue(visible_xpath_assert(self, element= price_card1))
+        self.driver.implicitly_wait(500)
+        print('>>  At least on result is displayed')
+
+        # get list for prices
+        print('getting list for prices')
+        price_check = price_search_key(self)
+        print(price_check)
+
+        # convert list to ints and assert <  as set by filter
+        print('convert list to ints and assert 40 < 40  as set by filter')
+        prices = [price_int.strip("$/day") for price_int in price_check]
+        results = list(map(int, prices))
+        for each in results:
+            assert each == 40     
+        print('>>  all results equal 40')
 
         # 
         print('')
