@@ -230,79 +230,9 @@ class search_by_price(unittest.TestCase):
         results = list(map(int, prices))
         for each in results:
             assert each == 40     
-        print('>>  all results equal 40')
+        print('>>  all results equal 40')      
 
-        # 
-        print('')
-        print('>>  ')
-
-        # 
-        print('')
-        print('>>  ')
-
-        # 
-        print('')
-        print('>>  ')
-
-        # 
-        print('')
-        print('>>  ')
-
-        # 
-        print('')
-        print('>>  ')
-
-        # 
-        print('')
-        print('>>  ')
-
-        # 
-        print('')
-        print('>>  ')
-
-        # 
-        print('')
-        print('>>  ')
-
-        # 
-        print('')
-        print('>>  ')
-
-        # 
-        print('')
-        print('>>  ')
-
-        # 
-        print('')
-        print('>>  ')
-
-        # 
-        print('')
-        print('>>  ')
-
-        # 
-        print('')
-        print('>>  ')
-
-        # 
-        print('')
-        print('>>  ')
-
-        # 
-        print('')
-        print('>>  ')
-
-        # 
-        print('')
-        print('>>  ')
-
-        
-
-
-
-
-
-
+        print('>>>> Test completed as Passed  <<< ')
 
 def takeDown(self):
         self.driver.quit()
