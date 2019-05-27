@@ -171,3 +171,17 @@ def search_results(self, text, results_in_list):
 def search_bar(self, text):
     self.driver.find_element_by_xpath(search_search_bar).send_keys(text)
     self.driver.find_element_by_xpath(search_search_btn).click()
+
+def select_calendar(self):
+            i = 1
+            path = f"{calendar_days}{i}{calendar_days_end}"
+            while visible_xpath_assert(self, element= path) == True:
+                self.driver.implicitly_wait(10)
+                self.driver.find_element_by_xpath(path).click()
+                i+1
+                self.driver.find_element_by_xpath(rent_calendar_next_btn).click()
+                if i == 32:
+                    self.driver.find_element_by_xpath(rent_calendar_next_month).click()
+                    i = 1
+                elif self.assertTrue(find_by_text(self, text= 'About Your Rental')):
+                    break
