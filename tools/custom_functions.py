@@ -69,16 +69,14 @@ def log_out(self):
     self.driver.implicitly_wait(1000)
 
     # Assert successfully navigated to profile page and select log out
-    self.driver.find_element_by_xpath(profile_ident)
-    self.driver.find_element_by_xpath(profile_logout).click()
+    self.driver.find_element_by_xpath(profile_ident).is_displayed()
+    click_text(self, text= 'Sign Out')
     self.driver.implicitly_wait(1000)
     self.driver.find_element_by_xpath(home_ident).is_displayed()
 
-def do_email_verif(self):
+def denial_email(self):
     """
     @ Gets the randomized activity, and navigates to yahoo app
-    @ Looks at e-mail gets the recoverycode and deletes the e-mail
-    @ navigates back to legrand app with the recovery code
     """
     # Store App Activity and navigate to Yahoo app
     self.driver.implicitly_wait(1000)
@@ -100,12 +98,10 @@ def do_email_verif(self):
 
     # Verify New Email exists and Grab the text from message
     self.assertTrue(self.driver.find_element_by_id('com.yahoo.mobile.client.android.mail:id/mail_item_unread_indicator').is_displayed())
-    email_text = self.driver.find_element_by_id('com.yahoo.mobile.client.android.mail:id/mail_item_text').text
+    email_text = self.driver.find_element_by_id('com.yahoo.mobile.client.android.mail:id/mail_item_title').text
 
-    # seperate the message to get the Recovery code 
-    recov_code = email_text.split()[3]
-    # print that the code was successfully identified 
-    print(recov_code)
+    #assert Email is notifing user that request was denyed
+    self.assertEqual(email_text, 'Your reservation request was declined by the owner')
 
     # Long Press selector to delete message
     self.assertTrue(self.driver.find_element_by_xpath('(//android.widget.ImageView[@content-desc="Multi-select checkbox. Not checked. For emails from Today"])[1]').is_displayed())
@@ -119,10 +115,9 @@ def do_email_verif(self):
     self.assertTrue(self.driver.find_element_by_id('com.yahoo.mobile.client.android.mail:id/empty_view_text').is_displayed())
 
     # go back to yoodlize app
-    print(f'Navigating back to Legrand app your Recoverycode is {recov_code}')
-    self.driver.start_activity('com.yoodlize', activity)
+    print('Navigating back to yoodlize app Denial email was displayed as expected')
+    self.driver.start_activity('com.yoodlize.test', activity)
 
-    return recov_code
 
 def price_search_key(self):
     self.driver.implicitly_wait(5000)
@@ -185,3 +180,43 @@ def select_calendar(self):
                     i = 1
                 elif self.assertTrue(find_by_text(self, text= 'About Your Rental')):
                     break
+
+def check_SMS(self):
+    # Navigate to SMS application
+    self.driver.implicitly_wait(1000)
+    SEARCH_ITEM = 'Z_Test_item_Shelby'
+    activity = self.driver.current_activity
+    self.driver.start_activity("com.adhoclabs.burner", ".BurnerMainDrawerActivity")
+    print('Switching Application To Check SMS Message!')
+
+    #Assert User Successfully Navigated to App HomePage 
+    self.assertTrue(self.driver.find_element_by_id('com.adhoclabs.burner:id/main_content').is_displayed())
+
+    # Identify New Message Notification and click
+    new_msg = self.driver.find_element_by_id('com.adhoclabs.burner:id/call_status')
+    self.assertTrue(new_msg.is_displayed())
+
+    # Read Message
+    msg = self.driver.find_element_by_id('com.adhoclabs.burner:id/call_status')
+
+    # Grab the text from message
+    msg_text = self.driver.find_element_by_id('com.adhoclabs.burner:id/call_status').text
+    
+    self.assertEqual(msg_text, f'Yoodlize: Someone would like to rent your {SEARCH_ITEM}')
+
+    # Long Press selector to delete message
+    actions = TouchAction(self.driver)
+    actions.long_press(msg)
+    actions.perform()
+
+    # Actually Delete message
+    delte_msg = self.driver.find_element_by_id('com.adhoclabs.burner:id/buttonDefaultPositive')
+    self.assertTrue(delte_msg.is_displayed())
+    delte_msg.click()
+
+    # assert the message was successfully deleted
+    self.assertTrue(EC.invisibility_of_element_located((By.ID, 'com.adhoclabs.burner:id/call_status')))
+    print('Message Successfully Deleted!')
+
+    print(f'Navigating back to Yoodlize app')
+    self.driver.start_activity('com.yoodlize.test', activity)

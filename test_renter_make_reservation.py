@@ -22,6 +22,7 @@ class renter_make_reservation(unittest.TestCase):
 
     def test_renter_make_reservation(self):
         EMAIL_RENTER = 'Z.timgranger@gmail.com'
+        EMAIL_OWNER = 'Z.shelbyproctor@gmail.com'
         PASSWORD = '12345678Test'
         SEARCH_ITEM = 'Z_Test_item_Shelby'
         R_MSG1 = 'Renter_123'
@@ -221,7 +222,7 @@ class renter_make_reservation(unittest.TestCase):
 
         # now assert newcard was added and select it
         print('now assert newcard was added and select it')
-        self.driver.find_element_by_xpath(rent_patment_select_different_card).click()
+        click_text(self, text= 'Select a different card')
         self.driver.implicitly_wait(500)
         self.assertTrue(visible_xpath_assert(self, element= rent_select_card_ident))
         self.driver.implicitly_wait(500)
@@ -243,6 +244,59 @@ class renter_make_reservation(unittest.TestCase):
         # assert user made it to rental success page
         print('assert user made it to rental success page')
         self.assertTrue(visible_xpath_assert(self, element= rent_success_ident))
+
+        # Now assert Owner recieved SMS notification
+        print(' Now assert Owner recieved SMS notification')
+        check_SMS(self)
+        print('>>  SMS Was displayed as expected and back on Yoodlize app')
+
+        # Logout and assert user is on home page
+        print('Logout and assert user is on home page')
+        log_out(self)
+        self.driver.implicitly_wait(500)
+        self.assertTrue(visible_xpath_assert(self, element= home_ident))
+        print('>>  User is now logged out and on homepage')
+
+        # Login as Owner
+        print('Login as Owner')
+        login(self, email= EMAIL_OWNER, password= PASSWORD)
+        self.assertTrue(visible_xpath_assert(self, element= home_loggedin_ident))
+        print('>>  Owner is now logged in')
+
+        # Assert inbox has a notification indicator then navigate to inbox
+        print('Assert inbox has a notification indicator then navigate to inbox')
+        self.assertTrue(visible_xpath_assert(self, element= home_inbox_notification))
+        self.driver.find_element_by_xpath(home_inbox).click()
+        print('>>  New msg notification was displayed and user clicked to navigate to inbox')
+
+        # assert inbox is displayed and select new notification
+        print('assert inbox is displayed and select new notification')
+        self.assertTrue(visible_xpath_assert(self, element= inbox_ident))
+        self.driver.find_element_by_xpath(inbox_pending_notification).click()
+        print('>> User selected new msg')
+
+        # assert user was navigated to message screen reads msg and denys request
+        print('assert user was navigated to message screen reads msg and denys request')
+        self.assertTrue(visible_xpath_assert(self, element= inbox_msging_ident))
+        msg_text = self.driver.find_element_by_xpath(inbox_msging_msg1).text
+        self.assertEqual(msg_text, R_MSG1)
+        self.driver.find_element_by_xpath(inbox_msging_deny).click()
+
+        # assert user was navigated back to inbox main page
+        print('assert user was navigated back to inbox main page')
+        self.assertTrue(visible_xpath_assert(self, element= inbox_ident))
+        print('>>  user is now back on inbox main page')
+
+        # Refresh page and asser pending placeholder is not visible
+        print('Refresh page and asser pending placeholder is not visible')
+        self.driver.swipe(start_x=150, start_y=350, end_x=150, end_y=1800, duration=600)
+        self.driver.implicitly_wait(500)
+        self.assertFalse(visible_xpath_assert(self, element= inbox_pending_notification))
+        print('Request was successfully denied')
+
+        # Now Navigate to yahoo and verify email\notification the request was denyed
+        denial_email(self)
+        print('User is back on yoodlize app test is now complete')
         
         print('test complete')
 
