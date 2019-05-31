@@ -222,6 +222,7 @@ class renter_make_reservation(unittest.TestCase):
 
         # now assert newcard was added and select it
         print('now assert newcard was added and select it')
+        self.driver.implicitly_wait(1500)
         click_text(self, text= 'Select a different card')
         self.driver.implicitly_wait(500)
         self.assertTrue(visible_xpath_assert(self, element= rent_select_card_ident))
