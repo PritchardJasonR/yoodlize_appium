@@ -23,7 +23,14 @@ class owner_list_item(unittest.TestCase):
     def test_owner_list_item(self):
         EMAIL= 'Z.timgranger@gmail.com'
         PASSWORD = '12345678Test'
-        title = 'Auto_Living_Room'
+        file = open(PATH("plus_one.txt"), 'r')
+        counter = int(file.readline())+1
+        file.close()
+        counter_str = str(counter)
+        file = open(PATH("plus_one.txt"), 'w')
+        file.write(counter_str)
+        file.close()
+        title = f'Auto_Living_Room{counter}'
         description = 'This Living Room is posted automatically and should be deleted before anyone sees me!'
         PRICE = '40'
         RULES1 = 'Do Not Look At Me'
@@ -214,53 +221,111 @@ class owner_list_item(unittest.TestCase):
         self.assertEqual(review_description, description)
         self.assertEqual(review_rule1, f'• {RULES1}')
         self.assertEqual(review_rule2, f'• {RULES2}')
+        self.driver.find_element_by_xpath(list_review_publish_btn).click()
+        self.driver.implicitly_wait(500)
         
+        # Final page assert user cant publish until bolth boxes are checked
+        self.assertTrue(visible_xpath_assert(self, element= list_publish_liability))
+        self.driver.find_element_by_xpath(list_publish_checkbox1).click()
+        self.driver.find_element_by_xpath(publish_btn).click()
+        self.driver.find_element_by_xpath(list_publish_checkbox1).click()
+        self.driver.find_element_by_xpath(list_publish_checkbox2).click()
+        self.driver.find_element_by_xpath(publish_btn).click()
+        self.driver.find_element_by_xpath(list_publish_checkbox1).click()
+        self.driver.find_element_by_xpath(publish_btn).click()
+        print('>>  Item is now published')
 
-        print('>>  ')
+        # share page
+        self.assertTrue(visible_xpath_assert(self, element= list_share_ident))
+        self.driver.find_element_by_xpath(list_share_done).click()
+        self.driver.implicitly_wait(500)
+        self.assertTrue(visible_xpath_assert(self, element= home_loggedin_ident))
 
-        #
-        print('')
-        print('>>  ')
+        '''
+        Now unpublish
+        '''
+        # start with search by text script
+        print('start with search by text script')
+        print('Test Searching by text from home page')
+        self.driver.find_element_by_xpath(home_search_bar).send_keys(title)
+        if  self.driver.is_keyboard_shown() == False:
+            self.driver.find_element_by_xpath(home_search_bar).click()
+            self.driver.implicitly_wait(1000)
+        else:
+            print('keyboard is displayed')
+        self.driver.execute_script("mobile:performEditorAction", {'action': 'search'})
+        self.driver.implicitly_wait(1000)
+        print('>>  selected search btn')
 
-        #
-        print('')
-        print('>>  ')
+        # Reviewing Results
+        print('Reviewing Results')
+        self.assertTrue(find_by_text(self, text=title))
+        print('>>  At Least One Result Is Displayed With Exact Text That Was Searched For')
+        self.driver.find_element_by_xpath(search_single_card).click()
+        print('>>  item found and selected')
 
-        #
-        print('')
-        print('>>  ')
+        # Select edit btn
+        print('Select edit btn')
+        self.driver.implicitly_wait(1000)
+        self.assertTrue(find_by_text(self, text= 'Edit'))
+        click_text(self, text='Edit')
+        print('>>  Edit displayed and selected')
 
-        #
-        print('')
-        print('>>  ')
+        # assert user is back into item edit page
+        print('assert user is back into item edit page')
+        self.assertTrue(visible_xpath_assert(self, element= list_page1_ident))
+        print('>>  User has navigated to appropriate page')
 
-        #
-        print('')
-        print('>>  ')
+        # select the publish tab
+        print('select the publish tab')
+        self.driver.find_element_by_xpath(list_page1_unpub).click()
+        print('>>  unpublish tab selected')
 
-        #
-        print('')
-        print('>>  ')
+        # assert user is on unpublish page
+        print('assert user is on unpublish page')
+        self.assertTrue(visible_xpath_assert(self, element= list_edit_unpublish_ident))
+        unpub_text = self.driver.find_element_by_xpath(list_edit_unpublish_ident).text
+        self.assertEqual(unpub_text, "If you would like to no longer list your item on Yoodlize click the button below")
+        print('>>  user is on correct page')
 
-        #
-        print('')
-        print('>>  ')
+        # now select unpublish btn
+        print('now select unpublish btn')
+        self.driver.find_element_by_xpath(list_edit_unpublish_btn).click()
+        sleep(1)
+        no_longer_text = self.driver.find_element_by_xpath(list_edit_no_longer_public).text
+        self.assertEqual(no_longer_text, 'Your item is no longer publicly visible on the site. It will not appear on the front page or in any searches.')
+        print('>>  Item is unpublished')
 
-        #
-        print('')
-        print('>>  ')
+        # click done
+        print('click done')
+        self.driver.find_element_by_xpath(list_edit_save_btn).click()
+        self.driver.implicitly_wait(500)
+        self.driver.find_element_by_xpath(list_edit_home).click()
+        self.driver.implicitly_wait(500)
+        self.assertTrue(visible_xpath_assert(self, element= home_loggedin_ident))
+        print('>>  done clicked user is on home page')
 
-        #
-        print('')
-        print('>>  ')
+        """
+        now search for item again to assert it is actually unpublished.
+        """
+        # search by test again
+        print('search by test again')
+        self.driver.find_element_by_xpath(home_search_bar).send_keys(title)
+        if  self.driver.is_keyboard_shown() == False:
+            self.driver.find_element_by_xpath(home_search_bar).click()
+            self.driver.implicitly_wait(1000)
+        else:
+            print('keyboard is displayed')
+        self.driver.execute_script("mobile:performEditorAction", {'action': 'search'})
+        self.driver.implicitly_wait(1000)
+        print('>>  selected search btn')
 
-        #
-        print('')
-        print('>>  ')
-
+        # Reviewing Results
+        print('Reviewing Results')
+        self.assertFalse(visible_xpath_assert(self, element= search_single_card))
+        print('>>  item  was not found')
+        print('>>> TEST COMPLETED AS PASSED <<<')
         
-        print('test complete')
-
 def takeDown(self):
         self.driver.quit()
 
