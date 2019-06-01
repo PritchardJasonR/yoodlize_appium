@@ -25,10 +25,10 @@ class search_by_text(unittest.TestCase):
         """
         Search by text function
         """
-        FULL_NAME = 'Test item1'
-        PARTIAL1 = 'Test'
-        partial_lowercase = 'ccoon'
-        full_lowercase = 'test rock'
+        FULL_NAME = 'Z_Test_item_Shelby'
+        PARTIAL1 = 'Z_Test'
+        partial_lowercase = 'est_item'
+        full_lowercase = 'z_test_item2'
         print('Driver Created')
 
         self.driver.implicitly_wait(1000)

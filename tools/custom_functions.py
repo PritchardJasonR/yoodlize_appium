@@ -90,18 +90,23 @@ def denial_email(self):
     self.driver.implicitly_wait(5000)
     self.driver.hide_keyboard()
     self.assertTrue(self.driver.find_element_by_id('com.yahoo.mobile.client.android.mail:id/mail_list').is_displayed())
-    while not self.driver.find_element_by_id('com.yahoo.mobile.client.android.mail:id/mail_item_unread_indicator').is_displayed():
-        sleep(5)
+    i = 1
+    while visible_xpath_assert(self, element= '//android.widget.TextView[@content-desc="Subject. Your reservation request was declined by the owner. Double tap to open, double-tap and hold to select"]') == False:
+        sleep(3)
         self.driver.swipe(start_x=750, start_y=1250, end_x=750, end_y=1750, duration=800)
+        print(f'swipe{i}')
+        i+1
     self.driver.implicitly_wait(60000)
 
 
     # Verify New Email exists and Grab the text from message
     self.assertTrue(self.driver.find_element_by_id('com.yahoo.mobile.client.android.mail:id/mail_item_unread_indicator').is_displayed())
-    email_text = self.driver.find_element_by_id('com.yahoo.mobile.client.android.mail:id/mail_item_title').text
+    sent_text = self.driver.find_element_by_xpath('//android.widget.TextView[@content-desc="Subject. Your reservation request was sent to the owner. Double tap to open, double-tap and hold to select"]').text
+    denial_text = self.driver.find_element_by_xpath('//android.widget.TextView[@content-desc="Subject. Your reservation request was declined by the owner. Double tap to open, double-tap and hold to select"]').text
 
     #assert Email is notifing user that request was denyed
-    self.assertEqual(email_text, 'Your reservation request was declined by the owner')
+    self.assertEqual(sent_text, 'Your reservation request was sent to the owner')
+    self.assertEqual(denial_text, 'Your reservation request was declined by the owner')
 
     # Long Press selector to delete message
     self.assertTrue(self.driver.find_element_by_xpath('(//android.widget.ImageView[@content-desc="Multi-select checkbox. Not checked. For emails from Today"])[1]').is_displayed())
