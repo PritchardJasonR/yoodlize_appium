@@ -84,6 +84,10 @@ class renter_make_reservation(unittest.TestCase):
         self.assertTrue(visible_xpath_assert(self, element= search_search_bar))
         print('>>  back btn clicked')
 
+        """
+        begin test
+        """
+
         # Re select searched for item
         print('Re select searched for item')
         self.assertTrue(visible_xpath_assert(self, element= rent_search_item))

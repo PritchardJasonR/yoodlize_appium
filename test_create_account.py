@@ -238,11 +238,12 @@ class create_account(unittest.TestCase):
         # logout
         # select profile button
         print('logging out')
-        self.driver.find_element_by_xpath(home_profile).click()
+        self.driver.find_element_by_xpath(home_settings).click()
         self.driver.implicitly_wait(1000)
 
         # Assert successfully navigated to profile page and select log out
         self.driver.find_element_by_xpath(profile_ident)
+        self.driver.swipe(start_x=530, start_y=1830, end_x=530, end_y=180, duration=1100)
         self.driver.find_element_by_xpath(profile_logout).click()
         self.driver.implicitly_wait(1000)
 
@@ -250,8 +251,8 @@ class create_account(unittest.TestCase):
         """
         Create same account
         """
-        print('Due to ability to create same account cannot complete this porton of test')
-        self.driver.find_element_by_xpath(home_ident)
+        print('Due to ability to create same account cannot complete this portion of test')
+        # self.driver.find_element_by_xpath(home_ident)
         # self.driver.implicitly_wait(1000)
  
         

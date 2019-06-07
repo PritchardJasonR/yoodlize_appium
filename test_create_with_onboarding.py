@@ -262,13 +262,12 @@ class create_account_with_onboarding(unittest.TestCase):
         # logout
         # select profile button
         print('logging out')
-        self.driver.find_element_by_xpath(home_profile).click()
+        self.driver.find_element_by_xpath(home_settings).click()
         self.driver.implicitly_wait(1000)
 
         # Assert successfully navigated to profile page and select log out
         self.driver.find_element_by_xpath(profile_ident)
-        self.assertTrue(EC.text_to_be_present_in_element((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View'), f'{FNAME}'))
-        print('Users First Name is Displayed')
+        self.driver.swipe(start_x=530, start_y=1830, end_x=530, end_y=180, duration=1100)
         self.driver.find_element_by_xpath(profile_logout).click()
         self.driver.implicitly_wait(1000)
 

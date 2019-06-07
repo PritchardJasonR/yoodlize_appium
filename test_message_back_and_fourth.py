@@ -35,39 +35,7 @@ class create_account(unittest.TestCase):
         print('Driver Created')
         self.driver.implicitly_wait(1000)
         
-        # Assert on home page not logged in
-        self.assertTrue(self.driver.find_element_by_xpath(home_ident).is_displayed())
-        print('Test Started')
-        
-        # Login to a previously created account
-        print('Logging in to renter account')
-        login(self, email= EMAIL_RENTER, password= PASSWORD)
-
-        # Assert user is now logged in
-        self.assertTrue(visible_xpath_assert(self, element= home_loggedin_ident))
-        print('Renter is logged in')
-
-        # Navigate to the browse page and search for item user is considering renting
-        print('Navigate to the browse page and search for item user is considering renting')
-        self.driver.find_element_by_xpath(home_search_btn).click()
-        self.driver.implicitly_wait(1000)
-        print('>>  selected search btn')
-
-        # Assert User is on Search Page
-        self.assertTrue(visible_xpath_assert(self, element= search_search_bar))
-        print('>>  User is on search page')
-
-        # now search for item by text
-        self.driver.find_element_by_xpath(search_search_bar).send_keys(SEARCH_ITEM)
-        self.driver.find_element_by_xpath(search_search_btn).click()
-        self.driver.implicitly_wait(500)
-        print('>>  Searching for item')
-
-        # looking for result
-        self.assertTrue(find_by_text(self, text= SEARCH_ITEM))
-        click_text(self, text = SEARCH_ITEM)
-        print('>>  Found searched for item and selected it')
-
+        make_reservation(self)
 
         print('test complete')
 

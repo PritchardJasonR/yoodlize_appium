@@ -72,11 +72,11 @@ class login(unittest.TestCase):
         self.driver.implicitly_wait(1000)
 
         # click login btn
-        self.driver.find_element_by_xpath(login_btn).click()
+        self.driver.find_element_by_xpath(login_btn2).click()
 
         # Assert user has been successfuly logged in
         self.driver.find_element_by_xpath(home_loggedin_ident)
-        print('User is not logged in')       
+        print('>>  User is now logged in')       
         
 def takeDown(self):
         self.driver.quit()

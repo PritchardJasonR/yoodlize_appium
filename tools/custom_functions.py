@@ -225,3 +225,113 @@ def check_SMS(self):
 
     print(f'Navigating back to Yoodlize app')
     self.driver.start_activity('com.yoodlize.test', activity)
+
+
+def make_reservation(self):
+    SEARCH_ITEM = 'Z_Test_item_Shelby'
+    EMAIL_RENTER = 'Z.timgranger@gmail.com'
+    PASSWORD = '12345678Test'
+    R_MSG1 = 'Renter_123'
+    # Assert on home page not logged in
+    self.assertTrue(self.driver.find_element_by_xpath(home_ident).is_displayed())
+    print('Test Started')
+    
+    # Login to a previously created account
+    print('Logging in to renter account')
+    login(self, email= EMAIL_RENTER, password= PASSWORD)
+
+    # Assert user is now logged in
+    self.assertTrue(visible_xpath_assert(self, element= home_loggedin_ident))
+    print('Renter is logged in')
+
+    # Navigate to the browse page and search for item user is considering renting
+    print('Navigate to the browse page and search for item user is considering renting')
+    self.driver.find_element_by_xpath(home_search_btn).click()
+    self.driver.implicitly_wait(1000)
+    print('>>  selected search btn')
+
+    # Assert User is on Search Page
+    self.assertTrue(visible_xpath_assert(self, element= search_search_bar))
+    print('>>  User is on search page')
+
+    # now search for item by text
+    self.driver.find_element_by_xpath(search_search_bar).send_keys(SEARCH_ITEM)
+    self.driver.implicitly_wait(500)
+    print('>>  Searching for item')
+
+    # looking for result
+    self.assertTrue(visible_xpath_assert(self, element= rent_search_item))
+    click_text(self, text = '40')
+    self.driver.implicitly_wait(500)
+    click_text(self, text= SEARCH_ITEM)
+    print('>>  Found searched for item and selected it')
+
+    # Assert user has navigated to items info page
+    print('Assert use has navigated to items info page')
+    self.driver.implicitly_wait(500)
+    self.assertTrue(visible_xpath_assert(self, element= rent_item_ident))
+    self.assertTrue(find_by_text(self, text= SEARCH_ITEM))
+    print('>>  User has navigated to the item searched for`s information page')
+
+    # select request btn
+    print('select request btn')
+    self.driver.find_element_by_xpath(rent_item_request_btn).click()
+    self.driver.implicitly_wait(500)
+    self.assertTrue(visible_xpath_assert(self, element= rent_calendar_ident))
+    self.driver.find_element_by_xpath(rent_calendar_next_month).click()
+    print('>>  Request Btn clicked and navigated to calendar page')
+
+    # select valid calendar date and click next
+    print('select valid calendar date and click next')        
+    select_calendar(self)
+    print('>>  Calendar day selected')
+    
+    # Assert user has navigated to the expected screen
+    print('Assert user has navigated to the expected screen')
+    self.assertTrue(find_by_text(self, text= 'About Your Rental'))
+    print('>>  User has navigated to message screen')
+
+    # Input message to send and select next btn
+    print('Input message to send and select next btn')
+    self.driver.find_element_by_xpath(rent_msg_field).send_keys(R_MSG1)
+    self.driver.find_element_by_xpath(rent_msg_nxt_btn).click()
+    self.driver.implicitly_wait(1000)
+    self.assertTrue(visible_xpath_assert(self, element= rent_payment_ident))
+    print('>>  next btn clicked and on payment screen')
+
+    # assert favorite card is visible select add card
+    print('assert favorite card is visible select add card')
+    self.assertTrue(visible_xpath_assert(self, element= rent_payment_fav_card))
+    self.driver.find_element_by_xpath(rent_payment_add_card).click()
+    self.driver.implicitly_wait(500)
+    self.assertTrue(visible_xpath_assert(self, element= rent_add_card_ident))
+    print('>>  user selected add card and was navigated to add card page successfully')
+
+
+    # Now select cancel
+    print('Now select cancel')
+    self.driver.find_element_by_xpath(rent_add_card_cancel_btn).click()
+    self.driver.implicitly_wait(500)
+    self.assertTrue(visible_xpath_assert(self, element= rent_payment_ident))
+    print('>>  cancel btn clicked and user navigated back to payment page')
+
+
+    # select card
+    print('now reselect add card')
+    self.driver.find_element_by_xpath(rent_payment_fav_card).click()
+    self.driver.implicitly_wait(500)
+    
+    # now assert card was added and select it
+    print('now assert newcard was added and select it')
+    click_text(self, text= 'Next')
+
+    # Assert user is on final page and select the next button
+    print('Assert user is on final page and select the next button')
+    self.assertTrue(visible_xpath_assert(self, element= rent_final_ident))
+    click_text(self, text= 'Next')
+    print('>>  User made it to final rent page and selected next button')
+
+    # assert user made it to rental success page
+    print('assert user made it to rental success page')
+    self.assertTrue(visible_xpath_assert(self, element= rent_success_ident))
+
