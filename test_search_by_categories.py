@@ -28,17 +28,16 @@ class search_by_categories(unittest.TestCase):
         print('Driver Created')
 
         self.driver.implicitly_wait(1000)
-        
         # Assert on home page not logged in
         self.assertTrue(self.driver.find_element_by_xpath(home_ident).is_displayed())
-        self.driver.implicitly_wait(1000)
+        self.driver.implicitly_wait(500)
         """
         Search by category TC
         """
         # Test Searching by category
         print('Test Searching by category has STARTED')
         self.driver.find_element_by_xpath(home_search_btn).click()
-        self.driver.implicitly_wait(1000)
+        self.driver.implicitly_wait(500)
         print('>>  selected search btn')
 
         # Assert user has navigated to search screen
@@ -47,8 +46,10 @@ class search_by_categories(unittest.TestCase):
 
         # select categories filter
         print('select categories filter')
-        self.driver.find_element_by_xpath(search_categories_btn).click()
-        self.driver.implicitly_wait(300)
+        sleep(1)
+        self.driver.find_element_by_xpath(sch_cat).click()
+        self.driver.find_element_by_xpath(sch_cat).click()
+        sleep(1)
         self.assertTrue(visible_xpath_assert(self, element= search_categories_ident))
         # select Business equipment filter
         self.driver.find_element_by_xpath(search_categories_business_equip).click()
