@@ -52,6 +52,8 @@ class search_by_price(unittest.TestCase):
         # Navigate to advanced search page
         print('Navigate to advanced search page')
         self.driver.find_element_by_xpath(search_advanced_btn).click()
+        self.driver.find_element_by_xpath(search_advanced_btn).click()
+        sleep(1)
         self.driver.implicitly_wait(500)
         self.assertTrue(visible_xpath_assert(self, element= search_adv_ident))
         print('>>  Advanced search options are displayed')

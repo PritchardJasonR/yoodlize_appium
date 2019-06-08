@@ -42,15 +42,14 @@ class search_by_text(unittest.TestCase):
         """
         # Test Searching by text from home page not logged in
         print('Test Searching by text from home page not logged in')
-        self.driver.find_element_by_xpath(home_search_bar).send_keys('Test Rock')
-        self.driver.find_element_by_xpath(home_search_btn).click()
-        self.driver.implicitly_wait(1000)
-        print('>>  selected search btn')
-
+        self.driver.find_element_by_xpath(home_search_bar).send_keys('Z_Test_item_Shelby')
+        self.driver.implicitly_wait(300)
+   
         # Reviewing Results
         print('Reviewing Results')
-        find_by_text(self, text='Test Rock')
-        print(">>  searching from home screen currently is unreliable")
+        find_by_text(self, text='Z_Test_item_Shelby')
+        self.driver.find_element_by_xpath(home_search_btn2).click()
+        print(">>  Item searched for is displayed")
 
         # fill search bar
         print('fill search bar')
