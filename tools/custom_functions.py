@@ -40,10 +40,6 @@ def visible_accessibility_id_assert(self, element):
         return True
 
 def login(self, email, password):
-    # Assert on home page not logged in
-    self.assertTrue(self.driver.find_element_by_xpath(home_ident).is_displayed())
-    print('User is not logged in')
-    self.driver.implicitly_wait(1000)
     
     # navigate to login page
     self.driver.find_element_by_xpath(home_login_btn).click()
@@ -64,15 +60,18 @@ def login(self, email, password):
     print('user is now logged in')
 
 def log_out(self):
+     # select profile button
     print('logging out')
-    self.driver.find_element_by_xpath(home_profile).click()
+    self.driver.find_element_by_xpath(home_settings).click()
     self.driver.implicitly_wait(1000)
 
     # Assert successfully navigated to profile page and select log out
-    self.driver.find_element_by_xpath(profile_ident).is_displayed()
-    click_text(self, text= 'Sign Out')
+    self.driver.find_element_by_xpath(profile_ident)
+    self.driver.swipe(start_x=530, start_y=1830, end_x=530, end_y=180, duration=1100)
+    self.driver.find_element_by_xpath(profile_logout).click()
     self.driver.implicitly_wait(1000)
-    self.driver.find_element_by_xpath(home_ident).is_displayed()
+
+    print('Now user has logged out')
 
 def denial_email(self):
     """

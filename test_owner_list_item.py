@@ -247,6 +247,7 @@ class owner_list_item(unittest.TestCase):
         # start with search by text script
         print('start with search by text script')
         print('Test Searching by text from home page')
+        self.driver.find_element_by_xpath(home_search_nav).click()
         self.driver.find_element_by_xpath(home_search_bar).send_keys(title)
         if  self.driver.is_keyboard_shown() == False:
             self.driver.find_element_by_xpath(home_search_bar).click()
@@ -310,9 +311,10 @@ class owner_list_item(unittest.TestCase):
         """
         # search by test again
         print('search by test again')
-        self.driver.find_element_by_xpath(home_search_bar).send_keys(title)
+        self.driver.find_element_by_xpath(home_search_nav).click()
+        self.driver.find_element_by_xpath(home_search_search_bar).send_keys(title)
         if  self.driver.is_keyboard_shown() == False:
-            self.driver.find_element_by_xpath(home_search_bar).click()
+            self.driver.find_element_by_xpath(home_search_search_bar).click()
             self.driver.implicitly_wait(1000)
         else:
             print('keyboard is displayed')

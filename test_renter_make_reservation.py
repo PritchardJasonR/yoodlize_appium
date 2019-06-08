@@ -54,18 +54,20 @@ class renter_make_reservation(unittest.TestCase):
         print('>>  selected search btn')
 
         # Assert User is on Search Page
-        self.assertTrue(visible_xpath_assert(self, element= search_search_bar))
+        self.assertTrue(visible_xpath_assert(self, element= home_search_bar))
         print('>>  User is on search page')
 
         # now search for item by text
-        self.driver.find_element_by_xpath(search_search_bar).send_keys(SEARCH_ITEM)
-        self.driver.find_element_by_xpath(search_search_btn).click()
+        self.driver.find_element_by_xpath(home_search_bar).send_keys(SEARCH_ITEM)
         self.driver.implicitly_wait(500)
         print('>>  Searching for item')
 
         # looking for result
-        self.assertTrue(visible_xpath_assert(self, element= rent_search_item))
-        click_text(self, text = '40')
+        find_by_text(self, text= SEARCH_ITEM)
+        sleep(1.2)
+        click_text(self, text = '$40/day')
+        self.driver.implicitly_wait(500)
+        self.driver.find_element_by_xpath(rent_search_select).click()
         self.driver.implicitly_wait(500)
         click_text(self, text= SEARCH_ITEM)
         print('>>  Found searched for item and selected it')
@@ -264,6 +266,7 @@ class renter_make_reservation(unittest.TestCase):
 
         # Login as Owner
         print('Login as Owner')
+        self.driver.implicitly_wait(500)
         login(self, email= EMAIL_OWNER, password= PASSWORD)
         self.assertTrue(visible_xpath_assert(self, element= home_loggedin_ident))
         print('>>  Owner is now logged in')
@@ -296,6 +299,7 @@ class renter_make_reservation(unittest.TestCase):
         print('Refresh page and asser pending placeholder is not visible')
         self.driver.swipe(start_x=150, start_y=350, end_x=150, end_y=1800, duration=600)
         self.driver.implicitly_wait(500)
+        find_by_text(self, text= 'You have no pending requests')
         self.assertFalse(visible_xpath_assert(self, element= inbox_pending_notification))
         print('Request was successfully denied')
 
